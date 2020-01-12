@@ -18,7 +18,7 @@ services:
     networks:
       - upload
   master:
-    image: ./checker_master
+    build: ./checker_master
     image: checker_master
     volumes:
       - "upload_data:/usr/upload"
@@ -38,7 +38,7 @@ services:
       - upload
       - result
   worker:
-    image: ./checker_worker
+    build: ./checker_worker
     image: checker_worker
     volumes:
       - "worker_data:/usr/checker"
@@ -65,7 +65,7 @@ services:
     expose: 
       - 3306
   result_server:
-    image: ./result_server
+    build: ./result_server
     image: result_server
     deploy:
       replicas: 1
