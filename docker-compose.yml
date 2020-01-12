@@ -22,7 +22,7 @@ services:
     image: checker_master
     volumes:
       - "upload_data:/usr/upload"
-      - "worker_data:/usr/checker"
+      - "worker_data:/usr/worker"
     deploy:
       replicas: 1
       resources:
@@ -34,6 +34,10 @@ services:
         delay: 5s
         max_attempts: 3
         window: 30s
+    links:
+      - mysql:mysql
+    depends_on:
+      - mysql
     networks:
       - upload
       - result
@@ -41,7 +45,7 @@ services:
     build: ./checker_worker
     image: checker_worker
     volumes:
-      - "worker_data:/usr/checker"
+      - "worker_data:/usr/worker"
     deploy:
       replicas: 1
       resources:
@@ -50,6 +54,8 @@ services:
           memory: 300M
       restart_policy:
         condition: on-failure
+    depends_on:
+      - mysql
     networks:
       - result
   mysql:
@@ -62,8 +68,6 @@ services:
       - result
     environment:
       - MYSQL_ROOT_PASSWORD=secret
-    expose: 
-      - 3306
   result_server:
     build: ./results
     image: results

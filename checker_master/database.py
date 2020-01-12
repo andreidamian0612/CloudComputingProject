@@ -1,9 +1,9 @@
 import mysql.connector
 
 mydb = mysql.connector.connect(
-  host="localhost",
+  host="mysql",
   user="root",
-  passwd="123456789"
+  passwd="secret"
 )
 cursor = None
 
