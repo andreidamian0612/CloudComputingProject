@@ -7,12 +7,14 @@ from database import db_init
 upload_path = '/usr/upload'
 worker_path = '/usr/upload'
 
+
 def wait_work():
     while True:
         if os.listdir(upload_path).count == 0:
             sleep(1)
         else:
             start_work()
+
 
 def start_work():
     for archive in os.listdir(upload_path):
@@ -27,8 +29,10 @@ def start_work():
             homework_folder = os.fsdecode(folder)
             start_worker(os.path.join(extracted_directory, homework_folder))
 
+
 def start_worker(homework_path):
-    os.rename(homework_path, os.path.join(worker_path, os.path.basename(homework_path))
+    os.rename(homework_path, os.path.join(worker_path, os.path.basename(homework_path)))
+
 
 if __name__ == "__main__":
     db_init()
