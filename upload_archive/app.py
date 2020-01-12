@@ -2,7 +2,7 @@ import os
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/home/dama'
+UPLOAD_FOLDER = '/usr/upload'
 ALLOWED_EXTENSIONS = {'zip'}
 
 app = Flask(__name__)
