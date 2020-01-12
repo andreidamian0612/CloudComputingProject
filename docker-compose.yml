@@ -1,7 +1,9 @@
 version: "3"
 services:
-  web:
+  upload_server:
     image: upload_archive
+    volumes: up
+      - "upload_data:/usr/upload"
     deploy:
       replicas: 1
       resources:
@@ -14,5 +16,66 @@ services:
       - "5000:5000"
     networks:
       - upload
+  master:
+    image: checker_master
+    volumes:
+      - "upload_data:/usr/upload"
+      - "worker_data:/usr/checker"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 300M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 30s
+      networks:
+      - upload
+      - result
+  worker:
+    image: checker_worker
+    volumes:
+      - "worker_data:/usr/checker"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.8"
+          memory: 300M
+      restart_policy:
+        condition: on-failure
+      networks:
+      - result
+  mysql:
+    image: mysql
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      networks:
+      - result
+  result_server:
+    image: result_server
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 100M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "5001:5000"
+    networks:
+      - result
+
+volumes:
+  upload_data:
+  worker_data:
+
 networks:
   upload:
+  result:
