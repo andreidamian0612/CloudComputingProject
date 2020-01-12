@@ -8,8 +8,10 @@ RUN pip3 install --no-cache-dir -r /usr/src/worker/requirements.txt
 
 RUN mkdir -p /usr/src/worker
 
-COPY worker.py /usr/src/worker/
 COPY checker_environment /usr/src/worker/checker_environment
+COPY worker.py /usr/src/worker/
 COPY database.py /usr/src/worker/
+
+WORKDIR /usr/src/worker
 
 CMD [ "python3", "worker.py" ]

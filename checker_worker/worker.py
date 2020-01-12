@@ -2,39 +2,50 @@ import zipfile
 import os
 import subprocess
 import database as db
-
+from time import sleep
 
 upload_path = '/usr/upload'
 worker_path = '/usr/worker'
-checker_environment = '/usr/src/worker/checker_environment'
+checker_environment = '/usr/src/worker/checker_environment/*'
+workspace = "/usr/workspace"
+checker_script = './checker_test.sh'
 
-homework_file = 'tema3'
-workspace = "homework"
-checker_script = ''
-from_master = 'path'
+def start_worker():
+    hw_folder = os.path.join(worker_path, os.listdir(worker_path)[0])
+    student_name = hw_folder.split('_')[0]
 
-def start_worker(foldername):
-    os.system("cp -r /usr/src/worker/checker_environment")
-    student_name = foldername.split('_')[0]
-    for file in os.listdir(foldername):
-        if file.endswith('.zip'):
-            with zipfile.ZipFile(os.path.join(foldername, file), 'r') as zip_ref:
+    for archive in os.listdir(hw_folder):
+        hw_archive = os.path.join(hw_folder)
+        if archive.endswith('.zip'):
+            os.makedirs(workspace)
+            with zipfile.ZipFile(hw_archive, 'r') as zip_ref:
                 zip_ref.extractall(workspace)
+        else:
+            os.removedirs(hw_folder)
+            return student_name, 0
+
+    os.system(f"cp -r {checker_environment} {workspace}")
+
     os.chdir(workspace)
     os.system('make')
-    os.system(checker_script)
-    result = subprocess.check_output('./' + checker_script).decode()
+
+    result = subprocess.check_output(checker_script).decode()
+
     success = float(result.split('\n')[0])
     fail = float(result.split('\n')[1])
     percentage = success/fail * 100
+
+    os.removedirs(hw_folder)
+    os.removedirs(workspace)
+
     return student_name, percentage
 
 if __name__ == '__main__':
     db.init_connection()
     while True:
-        if os.listdir(worker_path).count() != 0:
-            student_name, percentage = start_worker(worker_path)
-            db.db_add_result(student_name, percentage)
+        if len(os.listdir(worker_path)) == 0:
+            sleep(1)
         else:
-            continue
+            student_name, percentage = start_worker()
+            db.db_add_result(student_name, percentage)
 
