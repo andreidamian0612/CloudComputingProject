@@ -1,8 +1,9 @@
 version: "3"
 services:
   upload_server:
-    image: upload_archive
-    volumes: up
+    build: ./upload_archive
+    image: upload_server
+    volumes: 
       - "upload_data:/usr/upload"
     deploy:
       replicas: 1
@@ -32,7 +33,7 @@ services:
         delay: 5s
         max_attempts: 3
         window: 30s
-      networks:
+    networks:
       - upload
       - result
   worker:
@@ -47,7 +48,7 @@ services:
           memory: 300M
       restart_policy:
         condition: on-failure
-      networks:
+    networks:
       - result
   mysql:
     image: mysql
@@ -55,7 +56,7 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
-      networks:
+    networks:
       - result
     environment:
       - MYSQL_ROOT_PASSWORD=secret
