@@ -57,6 +57,10 @@ services:
         condition: on-failure
       networks:
       - result
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    expose: 
+      - 3306
   result_server:
     image: result_server
     deploy:

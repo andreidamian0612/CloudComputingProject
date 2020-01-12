@@ -16,6 +16,9 @@ def start_worker(foldername):
     os.chdir(workspace)
     os.system('make')
     os.system(checker_script)
+    result = subprocess.check_output('./' + checker_script).decode()
+    success = result.split('\n')[0]
+    fail = result.split('\n')[1]
 
 if __name__ == '__main__':
     start_worker(foldername=)
