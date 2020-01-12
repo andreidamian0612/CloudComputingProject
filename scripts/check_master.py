@@ -1,21 +1,27 @@
+import subprocess
 import zipfile
 import os
 
 homework_file = 'tema3'
 workspace = "homework"
-checker_script = ''
+checker_script = 'my_script.sh'
 
 
 def start_worker(foldername):
     student_name = foldername.split('_')[0]
-    print(foldername)
+    # print(foldername)
     for file in os.listdir(foldername):
         if file.endswith('.zip'):
             with zipfile.ZipFile(os.path.join(foldername, file), 'r') as zip_ref:
                 zip_ref.extractall(workspace)
-    os.chdir(workspace)
+    # os.chdir(workspace)
     os.system('make')
-    os.system(checker_script)
+    print(os.getcwd())
+    result = subprocess.check_output('./' + checker_script).decode()
+    success = result.split('\n')[0]
+    fail = result.split('\n')[1]
+    print(success, fail)
+
 
 
 known_archives = []

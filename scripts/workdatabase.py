@@ -2,11 +2,17 @@ import mysql.connector
 
 
 
-config = {
-    'user': 'root',
-    'password': '123456789',
-    'host': '127.0.0.1'
-}
 
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  passwd="123456789"
+)
 
-cnx = mysql.connector.connect(**config)
+print(mydb)
+mycursor = mydb.cursor()
+# mycursor.execute("CREATE DATABASE mydatabase")
+mycursor.execute("SHOW DATABASES")
+
+for x in mycursor:
+  print(x)
