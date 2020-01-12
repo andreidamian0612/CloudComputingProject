@@ -2,7 +2,7 @@ import subprocess
 import zipfile
 import os
 from time import sleep
-from database import db_init
+# from database import db_init
 
 upload_path = '/usr/upload'
 worker_path = '/usr/upload'
@@ -35,5 +35,5 @@ def start_worker(homework_path):
 
 
 if __name__ == "__main__":
-    db_init()
+    # db_init()
     wait_work()

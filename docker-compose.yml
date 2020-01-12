@@ -65,8 +65,8 @@ services:
     expose: 
       - 3306
   result_server:
-    build: ./result_server
-    image: result_server
+    build: ./results
+    image: results
     deploy:
       replicas: 1
       resources:
