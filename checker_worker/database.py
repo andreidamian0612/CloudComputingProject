@@ -31,4 +31,4 @@ def db_init():
 
 def db_add_result(name, percentage):
   cursor.execute(f"""INSERT INTO Results VALUES(\"{name}\", {percentage});""")
-  cursor.commit()
+  mydb.commit()

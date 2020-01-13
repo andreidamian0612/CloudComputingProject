@@ -4,7 +4,6 @@ mydb = mysql.connector.connect(
   host="mysql",
   user="root",
   passwd="secret",
-  database="mydatabase"
 )
 cursor = None
 
