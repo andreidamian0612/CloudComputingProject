@@ -11,17 +11,20 @@ workspace = "/usr/workspace"
 checker_script = './checker_test.sh'
 
 def start_worker():
-    hw_folder = os.path.join(worker_path, os.listdir(worker_path)[0])
+    hw_folder = os.listdir(worker_path)[0]
+    hw_folder_path = os.path.join(worker_path, hw_folder)
+    print(hw_folder)
     student_name = hw_folder.split('_')[0]
+    print(student_name)
 
-    for archive in os.listdir(hw_folder):
-        hw_archive = os.path.join(hw_folder)
-        if archive.endswith('.zip'):
+    for archive in os.listdir(hw_folder_path):
+        hw_archive = os.path.join(hw_folder_path, archive)
+        print(hw_archive)
+        if hw_archive.endswith('.zip'):
             os.makedirs(workspace)
-            with zipfile.ZipFile(hw_archive, 'r') as zip_ref:
-                zip_ref.extractall(workspace)
+            os.system(f'unzip "{hw_archive}" -d {workspace}')
         else:
-            os.system(f"rm -rf {hw_folder}")
+            os.system(f"rm -rf {hw_folder_path}")
             return student_name, 0
 
     os.system(f"cp -r {checker_environment} {workspace}")
@@ -30,6 +33,8 @@ def start_worker():
     os.system('make')
 
     result = subprocess.check_output(checker_script).decode()
+
+    print(result)
 
     success = float(result.split('\n')[0])
     fail = float(result.split('\n')[1])

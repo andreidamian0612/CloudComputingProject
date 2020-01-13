@@ -17,6 +17,7 @@ def db_init():
     cursor.execute("CREATE DATABASE mydatabase")
   except:
     pass
+  cursor.execute("USE mydatabase")
   try:
     cursor.execute("""CREATE TABLE Results
                           (
@@ -28,5 +29,5 @@ def db_init():
     pass
 
 def db_add_result(name, percentage):
-  cursor.execute(f"""INSERT INTO Results VALUES({name}, {percentage});""")
+  cursor.execute(f"""INSERT INTO Results VALUES(\"{name}\", {percentage});""")
   cursor.commit()
