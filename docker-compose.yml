@@ -3,7 +3,7 @@ services:
   upload_server:
     build: ./upload_archive
     image: upload_server
-    volumes: 
+    volumes:
       - "upload_data:/usr/upload"
     deploy:
       replicas: 1

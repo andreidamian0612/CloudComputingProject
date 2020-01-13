@@ -21,7 +21,7 @@ def start_worker():
             with zipfile.ZipFile(hw_archive, 'r') as zip_ref:
                 zip_ref.extractall(workspace)
         else:
-            os.removedirs(hw_folder)
+            os.system(f"rm -rf {hw_folder}")
             return student_name, 0
 
     os.system(f"cp -r {checker_environment} {workspace}")
@@ -35,8 +35,8 @@ def start_worker():
     fail = float(result.split('\n')[1])
     percentage = success/fail * 100
 
-    os.removedirs(hw_folder)
-    os.removedirs(workspace)
+    os.system(f"rm -rf {hw_folder}")
+    os.system(f"rm -rf {workspace}")
 
     return student_name, percentage
 
