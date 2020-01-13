@@ -18,7 +18,7 @@ COPY database.py /usr/src/worker/
 WORKDIR /usr/src/worker
 RUN useradd -ms /bin/bash worker
 RUN chmod 777 /usr/src/worker/checker_environment/checker_test.sh
-RUN chown -R worker /usr/src/worker/
+RUN chown -R worker:worker /usr/src/worker/
 
 USER worker
 

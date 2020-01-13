@@ -45,7 +45,7 @@ services:
     build: ./checker_worker
     image: checker_worker
     volumes:
-      - "worker_data:/usr/worker"
+      - "worker_data:/home/worker/work"
     deploy:
       replicas: 1
       resources:
@@ -56,6 +56,7 @@ services:
         condition: on-failure
     links:
       - mysql:mysql
+      - master:checker_master
     depends_on:
       - mysql
     networks:

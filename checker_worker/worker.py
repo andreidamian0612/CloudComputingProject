@@ -5,7 +5,7 @@ import database as db
 from time import sleep
 
 upload_path = '/usr/upload'
-worker_path = '/usr/worker'
+worker_path = '/home/worker/work'
 checker_environment = '/usr/src/worker/checker_environment/*'
 workspace = "/home/worker/workspace"
 checker_script = './checker_test.sh'
@@ -17,7 +17,7 @@ def start_worker():
     print(hw_folder)
     student_name = hw_folder.split('_')[0]
     print(student_name)
-
+    print(os.listdir(hw_folder_path))
     for archive in os.listdir(hw_folder_path):
         hw_archive = os.path.join(hw_folder_path, archive)
         print(hw_archive)
@@ -25,7 +25,7 @@ def start_worker():
             os.makedirs(workspace)
             os.system(f'unzip "{hw_archive}" -d {workspace}')
         else:
-            os.system(f"rm -rf {hw_folder_path}")
+            os.system(f'rm -rf "{hw_folder_path}"')
             return student_name, 0
 
     os.system(f"cp -r {checker_environment} {workspace}")
@@ -41,14 +41,24 @@ def start_worker():
     fail = float(result.split('\n')[1])
     percentage = success / fail * 100
 
-    os.system(f"rm -rf {hw_folder}")
-    os.system(f"rm -rf {workspace}")
+    os.system(f'rm -rf "{hw_folder}"')
+    os.system(f'rm -rf "{workspace}"')
 
     return student_name, percentage
 
 
 if __name__ == '__main__':
-    db.init_connection()
+    i = 0
+    while True:
+        try:
+            db.init_connection()
+            break
+        except Exception as e:
+            if i >= 5:
+                raise Exception("Could not connect to database")
+            i += 1
+            print('Got the exception ==> wait for 15s until retry')
+            sleep(15)
     while True:
         if len(os.listdir(worker_path)) == 0:
             sleep(1)

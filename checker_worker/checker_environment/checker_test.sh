@@ -45,8 +45,7 @@ for p in "${pgm_images[@]}"; do
 
             ok_diff1=$(diff bssembssem1.pgm bssembssem2.pgm | wc -l)
             ok_diff2=$(diff bssembssem2.pgm bssembssem3.pgm | wc -l)
-            ok_diff3=$(diff bssembssem3.pgm bssembssem4.pgm | wc -l)
-            if (( $ok_diff1 == 0 )) && (( $ok_diff2 == 0 )) && (( $ok_diff3 == 0 )); then
+            if (( $ok_diff1 == 0 )) && (( $ok_diff2 == 0 )); then
                 #echo "Diff ok"
                 ok_compare_py=$(python3 compare.py ref/pgm/$p-bssembssem.pgm bssembssem1.pgm)
                 if [[ $ok_compare_py == "Images are equal." ]]; then
@@ -65,8 +64,7 @@ for p in "${pgm_images[@]}"; do
 
             ok_diff1=$(diff ${i}1.pgm ${i}2.pgm | wc -l)
             ok_diff2=$(diff ${i}2.pgm ${i}3.pgm | wc -l)
-            ok_diff3=$(diff ${i}3.pgm ${i}4.pgm | wc -l)
-            if (( $ok_diff1 == 0 )) && (( $ok_diff2 == 0 )) && (( $ok_diff3 == 0 )); then
+            if (( $ok_diff1 == 0 )) && (( $ok_diff2 == 0 )); then
                 #echo "Diff ok"
                 ok_compare_py=$(python3 compare.py ref/pgm/$p-$i.pgm ${i}1.pgm)
                 if [[ $ok_compare_py == "Images are equal." ]]; then
@@ -96,8 +94,7 @@ for p in "${pnm_images[@]}"; do
 
             ok_diff1=$(diff bssembssem1.pnm bssembssem2.pnm | wc -l)
             ok_diff2=$(diff bssembssem2.pnm bssembssem3.pnm | wc -l)
-            ok_diff3=$(diff bssembssem3.pnm bssembssem4.pnm | wc -l)
-            if (( $ok_diff1 == 0 )) && (( $ok_diff2 == 0 )) && (( $ok_diff3 == 0 )); then
+            if (( $ok_diff1 == 0 )) && (( $ok_diff2 == 0 )); then
                 #echo "Diff ok"
                 ok_compare_py=$(python3 compare.py ref/pnm/$p-bssembssem.pnm bssembssem1.pnm)
                 if [[ $ok_compare_py == "Images are equal." ]]; then
@@ -116,8 +113,7 @@ for p in "${pnm_images[@]}"; do
 
             ok_diff1=$(diff ${i}1.pnm ${i}2.pnm | wc -l)
             ok_diff2=$(diff ${i}2.pnm ${i}3.pnm | wc -l)
-            ok_diff3=$(diff ${i}3.pnm ${i}4.pnm | wc -l)
-            if (( $ok_diff1 == 0 )) && (( $ok_diff2 == 0 )) && (( $ok_diff3 == 0 )); then
+            if (( $ok_diff1 == 0 )) && (( $ok_diff2 == 0 )); then
                 #echo "Diff ok"
                 ok_compare_py=$(python3 compare.py ref/pnm/$p-$i.pnm ${i}1.pnm)
                 if [[ $ok_compare_py == "Images are equal." ]]; then

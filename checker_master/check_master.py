@@ -21,7 +21,7 @@ def start_work():
     print(os.listdir(upload_path))
     for archive in os.listdir(upload_path):
         archive_path = os.path.join(upload_path, archive)
-        print (archive_path)
+        print(archive_path)
         if not archive.endswith('.zip'):
             os.system(f"rm -rf {archive_path}")
             continue
@@ -32,5 +32,16 @@ def start_work():
 
 
 if __name__ == "__main__":
-    db_init()
+    i = 0
+    while True:
+        try:
+            db_init()
+            break
+        except Exception as e:
+            if i >= 5:
+                raise Exception("Could not connect to database")
+            i += 1
+            print('Got the exception ==> wait for 15s until retry')
+            sleep(15)
+
     wait_work()
