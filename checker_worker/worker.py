@@ -7,7 +7,7 @@ from time import sleep
 upload_path = '/usr/upload'
 worker_path = '/usr/worker'
 checker_environment = '/usr/src/worker/checker_environment/*'
-workspace = "/usr/workspace"
+workspace = "/home/worker/workspace"
 checker_script = './checker_test.sh'
 
 def start_worker():

@@ -6,6 +6,9 @@ RUN apt-get -y install python3 python3-pip default-libmysqlclient-dev zip libope
 COPY requirements.txt /usr/src/worker/
 RUN pip3 install --no-cache-dir -r /usr/src/worker/requirements.txt
 
+#for checker -- hardcoded
+RUN pip3 install pillow
+
 RUN mkdir -p /usr/src/worker
 
 COPY checker_environment /usr/src/worker/checker_environment
