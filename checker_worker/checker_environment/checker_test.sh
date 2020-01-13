@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 no_proc=$1
 executable="tema3"
+export OMPI_MCA_btl_vader_single_copy_mechanism=none
 
 # mpicc homework.c -o tema3
 # make > /dev/null
@@ -17,17 +18,12 @@ filters=(
 )
 
 pgm_images=(
-    "darth-vader"
     "despicable-me"
     "landscape"
     "macro"
-    "rorschach"
 )
 
 pnm_images=(
-    "baby-yoda"
-    "landscape"
-    "lena"
     "macro"
     "scroll-of-truth"
 )
@@ -46,7 +42,6 @@ for p in "${pgm_images[@]}"; do
             mpirun -np 1 $executable in/PGM/$p.pgm bssembssem1.pgm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
             mpirun -np 2 $executable in/PGM/$p.pgm bssembssem2.pgm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
             mpirun -np 4 $executable in/PGM/$p.pgm bssembssem3.pgm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
-            mpirun -np 8 $executable in/PGM/$p.pgm bssembssem4.pgm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
 
             ok_diff1=$(diff bssembssem1.pgm bssembssem2.pgm | wc -l)
             ok_diff2=$(diff bssembssem2.pgm bssembssem3.pgm | wc -l)
@@ -67,7 +62,6 @@ for p in "${pgm_images[@]}"; do
             mpirun -np 1 $executable in/PGM/$p.pgm "${i}1.pgm" $i
             mpirun -np 2 $executable in/PGM/$p.pgm "${i}2.pgm" $i
             mpirun -np 4 $executable in/PGM/$p.pgm "${i}3.pgm" $i
-            mpirun -np 8 $executable in/PGM/$p.pgm "${i}4.pgm" $i
 
             ok_diff1=$(diff ${i}1.pgm ${i}2.pgm | wc -l)
             ok_diff2=$(diff ${i}2.pgm ${i}3.pgm | wc -l)
@@ -99,7 +93,6 @@ for p in "${pnm_images[@]}"; do
             mpirun -np 1 $executable in/PNM/$p.pnm bssembssem1.pnm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
             mpirun -np 2 $executable in/PNM/$p.pnm bssembssem2.pnm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
             mpirun -np 4 $executable in/PNM/$p.pnm bssembssem3.pnm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
-            mpirun -np 8 $executable in/PNM/$p.pnm bssembssem4.pnm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
 
             ok_diff1=$(diff bssembssem1.pnm bssembssem2.pnm | wc -l)
             ok_diff2=$(diff bssembssem2.pnm bssembssem3.pnm | wc -l)
@@ -120,7 +113,6 @@ for p in "${pnm_images[@]}"; do
             mpirun -np 1 $executable in/PNM/$p.pnm "${i}1.pnm" $i
             mpirun -np 2 $executable in/PNM/$p.pnm "${i}2.pnm" $i
             mpirun -np 4 $executable in/PNM/$p.pnm "${i}3.pnm" $i
-            mpirun -np 8 $executable in/PNM/$p.pnm "${i}4.pnm" $i
 
             ok_diff1=$(diff ${i}1.pnm ${i}2.pnm | wc -l)
             ok_diff2=$(diff ${i}2.pnm ${i}3.pnm | wc -l)

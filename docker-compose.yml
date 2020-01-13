@@ -54,6 +54,8 @@ services:
           memory: 300M
       restart_policy:
         condition: on-failure
+    links:
+      - mysql:mysql
     depends_on:
       - mysql
     networks:

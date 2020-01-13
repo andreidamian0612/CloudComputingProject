@@ -10,6 +10,7 @@ checker_environment = '/usr/src/worker/checker_environment/*'
 workspace = "/home/worker/workspace"
 checker_script = './checker_test.sh'
 
+
 def start_worker():
     hw_folder = os.listdir(worker_path)[0]
     hw_folder_path = os.path.join(worker_path, hw_folder)
@@ -38,12 +39,13 @@ def start_worker():
 
     success = float(result.split('\n')[0])
     fail = float(result.split('\n')[1])
-    percentage = success/fail * 100
+    percentage = success / fail * 100
 
     os.system(f"rm -rf {hw_folder}")
     os.system(f"rm -rf {workspace}")
 
     return student_name, percentage
+
 
 if __name__ == '__main__':
     db.init_connection()
@@ -53,4 +55,3 @@ if __name__ == '__main__':
         else:
             student_name, percentage = start_worker()
             db.db_add_result(student_name, percentage)
-
