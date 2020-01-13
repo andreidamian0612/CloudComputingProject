@@ -39,9 +39,9 @@ for p in "${pgm_images[@]}"; do
         total=$((total+1))
 
         if [ "$i" == "bssembssem" ]; then
-            mpirun -np 1 $executable in/PGM/$p.pgm bssembssem1.pgm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
-            mpirun -np 2 $executable in/PGM/$p.pgm bssembssem2.pgm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
-            mpirun -np 4 $executable in/PGM/$p.pgm bssembssem3.pgm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
+            mpirun -np 1 $executable in/PGM/$p.pgm bssembssem1.pgm blur smooth sharpen
+            mpirun -np 2 $executable in/PGM/$p.pgm bssembssem2.pgm blur smooth sharpen
+            mpirun -np 4 $executable in/PGM/$p.pgm bssembssem3.pgm blur smooth sharpen
 
             ok_diff1=$(diff bssembssem1.pgm bssembssem2.pgm | wc -l)
             ok_diff2=$(diff bssembssem2.pgm bssembssem3.pgm | wc -l)
@@ -88,9 +88,9 @@ for p in "${pnm_images[@]}"; do
         #echo -e "$i filter\n"
         total=$((total+1))
         if [ "$i" == "bssembssem" ]; then
-            mpirun -np 1 $executable in/PNM/$p.pnm bssembssem1.pnm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
-            mpirun -np 2 $executable in/PNM/$p.pnm bssembssem2.pnm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
-            mpirun -np 4 $executable in/PNM/$p.pnm bssembssem3.pnm blur smooth sharpen emboss mean blur smooth sharpen emboss mean
+            mpirun -np 1 $executable in/PNM/$p.pnm bssembssem1.pnm blur smooth sharpen
+            mpirun -np 2 $executable in/PNM/$p.pnm bssembssem2.pnm blur smooth sharpen
+            mpirun -np 4 $executable in/PNM/$p.pnm bssembssem3.pnm blur smooth sharpen
 
             ok_diff1=$(diff bssembssem1.pnm bssembssem2.pnm | wc -l)
             ok_diff2=$(diff bssembssem2.pnm bssembssem3.pnm | wc -l)

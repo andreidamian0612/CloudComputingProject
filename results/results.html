@@ -1,0 +1,16 @@
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Percentage</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in value %}
+    <tr>
+        <td>{{row[0]}}</td>
+        <td>{{row[1]}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,14 +1,19 @@
 import mysql.connector
-
-mydb = mysql.connector.connect(
-  host="mysql",
-  user="root",
-  passwd="secret",
-)
+mydb = None
 cursor = None
+
+
+def db_connect():
+  global mydb
+  mydb = mysql.connector.connect(
+    host="mysql",
+    user="root",
+    passwd="secret",
+  )
 
 def init_connection():
   global cursor
+  db_connect()
   cursor = mydb.cursor()
 
 def db_init():

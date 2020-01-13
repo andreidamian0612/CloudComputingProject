@@ -20,6 +20,5 @@ RUN useradd -ms /bin/bash worker
 RUN chmod 777 /usr/src/worker/checker_environment/checker_test.sh
 RUN chown -R worker:worker /usr/src/worker/
 
-USER worker
 
 CMD [ "python3", "worker.py" ]

@@ -33,6 +33,7 @@ def start_work():
 
 if __name__ == "__main__":
     i = 0
+    # sleep(40)
     while True:
         try:
             db_init()
@@ -42,6 +43,7 @@ if __name__ == "__main__":
                 raise Exception("Could not connect to database")
             i += 1
             print('Got the exception ==> wait for 15s until retry')
+            print(e)
             sleep(15)
 
     wait_work()
